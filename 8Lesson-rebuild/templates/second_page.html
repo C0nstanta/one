@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{category}}</title>
+</head>
+<body>
+
+<style type="text/css" media="screen">
+
+table.redTable {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  border: 2px solid #A40808;
+  background-color: #EEE7DB;
+  width: 100%;
+  height: 200%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.redTable td, table.redTable th {
+  border: 6px solid #AAAAAA;
+  padding: 5px 10px;
+}
+table.redTable tbody td {
+  font-size: 25px;
+  font-weight: bold;
+  color: #333333;
+}
+table.redTable tr:nth-child(even) {
+  background: #F5C8BF;
+}
+table.redTable td:nth-child(even) {
+  background: #D0E4F5;
+}
+table.redTable thead {
+  background: #A40808;
+  border-bottom: 4px solid #444444;
+}
+table.redTable thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #A40808;
+}
+table.redTable thead th:first-child {
+  border-left: none;
+}
+
+table.redTable tfoot td {
+  font-size: 13px;
+}
+
+</style>
+    <h1>Here is information about {{ category }}:</h1>
+
+
+
+<table class="redTable">
+<thead>
+<tr>
+<th>Model</th>
+<th>In/Out of Stock</th>
+</tr>
+</thead>
+<tbody>
+{% for good in goods %}
+    <tr>
+
+    <td>{{ good[1] }}[ {{ good[2] }} ]</td>
+
+    {% if good[5] %}
+        <td><a href=/{{ category }}/{{ good[0] }}>In Stock</a></td>
+    {% else %}
+        <td>Out of Stock</td>
+    {% endif %}
+    </tr>
+{%endfor%}
+</tbody>
+</tr>
+</table>
+
+</body>
+</html>

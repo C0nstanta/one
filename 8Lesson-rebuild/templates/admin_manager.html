@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin PAGE</title>
+</head>
+<body>
+
+
+<style type="text/css" media="screen">
+table.greyGridTable {
+  border: 2px solid #FFFFFF;
+  background-color: #EEEEEE;
+  width: 40%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.greyGridTable td, table.greyGridTable th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 4px;
+}
+table.greyGridTable tbody td {
+  font-size: 18px;
+}
+table.greyGridTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.greyGridTable tfoot td {
+  font-size: 14px;
+}
+
+
+
+.styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.styled:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.styled:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+
+
+
+</style>
+
+
+
+<h1>Admin Page and DB</h1>
+
+
+
+	<div class="container">
+		<br>
+		<h3>You can add your goods or categories here:</h3>
+		<br>
+		<form name="form1" action="" class="form-inline" method="post" id="form1">
+            <h3>Here you can add your goods:</h3>
+                <table class="greyGridTable">
+                <tbody>
+                <tr>
+                <td><label for="category_choice">Choose a category:</label></td><td>
+                    <input list="category" id="category_choice" name="category" value="{{request.form.category}}" size="80"/></td></tr>
+                <tr>
+                <td><label for="brand_choice">Write a brand:</label></td><td>
+                    <input type="text" id="brand_choice" class="form-control" name="brand" value="{{request.form.brand}}" size="80" /></td></tr>
+                <tr>
+                <td><label for="model_choice">Type a model:</label></td><td>
+                    <input type="text" id="model_choice" class="form-control" name="model" value="{{request.form.model}}" size="80" /></td></tr>
+                <tr>
+                <td><label for="quantity">Input a quantity:</label></td><td>
+                    <input type="text" id="quantity" class="form-control" name="quantity" value="{{request.form.quantity}}" size="80"  /></td></tr>
+                <tr>
+                <td><label for="description">Fill description:</label></td><td>
+                    <input type="text" id="description" class="form-control" name="description" value="{{request.form.description}}" size="80" /></td></tr>
+                </tbody>
+                </tr>
+                </table>
+
+                <input class="favorite styled" type ="submit" name="action" value="Add item">
+
+		</form>
+		<form name="form2" action="" class="form-inline" method="post" id="form2">
+
+
+
+            <h3>Here you can add new category:</h3>
+            <table class="greyGridTable">
+                <tbody>
+                <tr>
+                <td><label for="category_add">Input category:</label></td><td>
+                    <input type="text" id="category_add" name="new_category" value="{{request.form.new_category}}" size="80"/></td></tr>
+                <tr>
+
+            </table>
+            <input class="favorite styled" type ="submit" name="action" value="Add category">
+
+
+
+		</form>
+	</div>
+
+
+
+<datalist id="category">
+    {% for categories in category_list %}
+
+    <option value="{{categories}}">
+
+    {% endfor %}
+</datalist>
+
+
+</body>
+</html>

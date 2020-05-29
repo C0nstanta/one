@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+
+<title>Admin Authorization</title>
+
+</head>
+
+<body>
+
+
+
+	<div class="container">
+		<br>
+		<h4>Please Login:</h4>
+		<br>
+		<form action="" class="form-inline" method="post">
+			<input type="text" class="form-control" placeholder = "Username" name="username" value="{{request.form.username}}">
+			<input type="password" class="form-control" placeholder = "Password" name="password" value="{{request.form.password}}">
+			<input class="btn btn-default" type="submit" value="Login">
+
+            {% if error %}
+            <h3>{{ error }}</h3>
+            {% endif %}
+			{% if admin_access %}
+			 <h3>{{ admin_access}}</h3>
+			{% endif %}
+		</form>
+	</div>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -21,6 +21,7 @@ class MyDBManager:
 
 
 class DBManager(object):
+    """Класс непосредственно работающий с нашей базой."""
 
     db_path = MyDBManager.db_path
 
@@ -121,8 +122,8 @@ class DBManager(object):
                     value_query = ()
                 res = cursor.execute(row_query, value_query)
                 return jsonify(res.fetchall())
-
-            if status == 'POST':#реализовано 2 способа добавления, через id факультета и куратора и через из названия.
+            # реализовано 2 способа добавления, через id факультета и куратора и через из названия.
+            if status == 'POST':
                 if 'fname_cur' and'fac_name' and 'lname_cur' in kwargs:
                     row_query_cur = f"SELECT id FROM curators_tbl WHERE curators_tbl.fname='{kwargs['fname_cur']}' AND " \
                                     f"curators_tbl.lname='{kwargs['lname_cur']}'"
@@ -179,8 +180,8 @@ class DBManager(object):
                     value_query = ()
                 res = cursor.execute(row_query, value_query)
                 return jsonify(res.fetchall())
-
-            if status == 'POST':#реализовано 2 способа добавления, через id студента и факультета и через их названия.
+            # реализовано 2 способа добавления, через id студента и факультета и через их названия.
+            if status == 'POST':
 
                 if 'fname_stud' and 'lname_stud' and'fac_name' in kwargs:
                     row_query_stud = f"SELECT id FROM students_tbl WHERE students_tbl.fname='{kwargs['fname_stud']}' " \
@@ -220,3 +221,86 @@ class DBManager(object):
 
             else:
                 return "Something wrong with your request, check all carefully "
+
+    def get_a_grades(self, status, min_grade=None, faculty_id=None, faculty_name=None ):
+        """Принимаем по умолчанию, если не задана минимальная СРЕДНЯЯ оценка, то таковой считаем min_grade_val
+        Отличникой по каждому факультету находим следующим образом:
+        (сумма всех оценок студента по факультету)/(количество всех оценок студента на факультете) и потом сравниваем с
+        нашим проходным баллом. Проходит - норм ;)."""
+        min_grade_val = 5 # (минимальное значение)
+        with MyDBManager(self.db_path) as conn:
+            cursor = conn.cursor()
+            if faculty_id:
+                row_query = "SELECT id FROM faculty_tbl WHERE id=?"
+                value_query = (faculty_id, )
+                res_fac_id = cursor.execute(row_query, value_query).fetchone()
+                fac_id = res_fac_id[0]
+
+            if faculty_name:
+                row_query = "SELECT  id FROM faculty_tbl WHERE fac_name=?"
+                value_query = (faculty_name,)
+                res_fac_id = cursor.execute(row_query, value_query).fetchone()
+                fac_id = res_fac_id[0]
+
+            if fac_id and not min_grade:
+                good_boys = self.calc_a_stud(fac_id, min_grade_val)
+                return f'For faculty id:{fac_id} with min_grade_value:{min_grade_val} student list is:{good_boys}'
+
+            if fac_id and min_grade:
+                good_boys = self.calc_a_stud(fac_id, min_grade)
+                return f'For faculty id:{fac_id} with min_grade_value:{min_grade} student list is:{good_boys}'
+
+    def calc_a_stud(self, faculty_id, min_grade_val):
+        """Функция расчета среднего значения успеваемости для каждого студента"""
+        with MyDBManager(self.db_path) as conn:
+            cursor = conn.cursor()
+            good_boys = list()
+            row_query = "SELECT grade, student_id FROM grades_tbl where faculty_id=?"
+            value_query = (faculty_id,)
+            res = cursor.execute(row_query, value_query).fetchall()
+            dict_grades = {}
+
+            for grade, student_id in res:
+                if student_id not in dict_grades:
+                    dict_grades[student_id] = list()
+                    dict_grades[student_id].append(grade)
+                else:
+                    dict_grades[student_id].append(grade)
+            for k in dict_grades.keys():
+                grades_sum = 0
+                for v in dict_grades[k]:
+                    grades_sum += v
+                middle = grades_sum / len(dict_grades[k])
+
+                if middle > min_grade_val:
+                    row_query = "SELECT fname, lname FROM students_tbl where id=?"
+                    value_query = (k,)
+                    res_stud = cursor.execute(row_query, value_query)
+                    for stud_data in res_stud:
+                        good_boys.append(f'{stud_data[0]} {stud_data[1]}')
+        return good_boys
+
+    def get_curators_stud(self, status, curator_id=None, curator_fname=None, curator_surname=None):
+        """Метод поучения списка студентов конкретного куратора. Куратора можем выбирать как через id, так и через
+        имя-фамилию. При поиске по имени-фамилии вводим данные в строке браузера в таком порядке:
+        http://127.0.0.1:5000/cur_stud/Имя куратора/Фамилия куратора"""
+        with MyDBManager(self.db_path) as conn:
+            cursor = conn.cursor()
+            stud_list = list()
+            if curator_fname and curator_surname:
+                row_query = "SELECT  id FROM curators_tbl WHERE fname=? and lname=?"
+                value_query = (curator_fname, curator_surname)
+                res_cur_id = cursor.execute(row_query, value_query).fetchone()
+                curator_id = res_cur_id[0]
+
+            if curator_id:
+                print(f'CurID:{curator_id}')
+                row_query = "SELECT fname, lname FROM students_tbl WHERE curator_id=?"
+                value_query = (curator_id, )
+                res_stud = cursor.execute(row_query, value_query).fetchall()
+                for stud in res_stud:
+                    print("1")
+                    stud_list.append(f'{stud[0]} {stud[1]}')
+                return f'Curator:{curator_id} students...{stud_list} '
+
+

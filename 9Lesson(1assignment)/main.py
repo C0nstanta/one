@@ -119,6 +119,26 @@ def grades_control(grade_id=None):
     else:
         return "Wrong request type"
 
+#Можем регулировать в ручном режиме минимальный СРЕДНИЙ балл попадания в отличники
+@app.route('/a_grades/<int:faculty_id>', methods=['GET'])
+@app.route('/a_grades/<int:faculty_id>/<int:min_grade>', methods=['GET'])
+@app.route('/a_grades/<string:faculty_name>', methods=['GET'])
+@app.route('/a_grades/<string:faculty_name>/<int:min_grade>', methods=['GET'])
+def a_grade_control(min_grade=None, faculty_id=None, faculty_name=None):
+    if request.method == 'GET':
+        result = dbmanager.get_a_grades('GET', faculty_id=faculty_id, min_grade=min_grade, faculty_name=faculty_name)
+    return result
+
+
+@app.route('/cur_stud/<int:curator_id>', methods=['GET'])
+@app.route('/cur_stud/<string:curator_fname>/<string:curator_surname>', methods=['GET'])
+def get_cur_stud(curator_id=None, curator_fname=None, curator_surname=None):
+    if request.method == 'GET':
+        print(f'cur_id_func:{curator_id}')
+        result = dbmanager.get_curators_stud('GET', curator_id=curator_id, curator_fname=curator_fname,
+                                             curator_surname=curator_surname)
+    return result
+
 
 if __name__ == "__main__":
     app.run(debug=True)

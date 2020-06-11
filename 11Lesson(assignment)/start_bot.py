@@ -8,7 +8,7 @@ dbmanager = DBManager()
 
 @bot.message_handler(commands=['start'])
 def hello(message):
-    msg =  bot.send_message(message.chat.id, 'Здравствуйте, введите свои ФИО(Через пробел, без доп символов).')
+    msg = bot.send_message(message.chat.id, 'Здравствуйте, введите свои ФИО(Через пробел, без доп символов).')
     bot.register_next_step_handler(msg, fio)
 
 

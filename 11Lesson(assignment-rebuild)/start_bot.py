@@ -20,7 +20,7 @@
 from telebot import TeleBot
 from app.bot_manager import DBManager
 
-bot = TeleBot("1209000481:AAH1fS_aqzpegkrcsvtMlV2ZfmUooKwXUK4")
+bot = TeleBot("somekeyhere")
 
 dbmanager = DBManager()
 

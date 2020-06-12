@@ -121,4 +121,5 @@ def comments(message):
         bot.send_message(message.chat.id, 'Спасибо, ваши данные проверены и записаны')
 
 
-bot.polling()
+if __name__ == "__main__":
+    bot.polling()

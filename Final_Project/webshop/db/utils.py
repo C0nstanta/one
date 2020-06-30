@@ -17,6 +17,7 @@ def init_test_user():
         email="testemail@email.com",
         address="Some address here 9a",
         comments="This is a test user bot",
+        total_summ=445.33
     )
 
 

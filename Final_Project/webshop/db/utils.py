@@ -26,7 +26,7 @@ def init_admin():
 
 
 if __name__ == "__main__":
-#    init_texts()
+    init_texts()
     init_test_user()
-#    init_admin()
+    init_admin()
 

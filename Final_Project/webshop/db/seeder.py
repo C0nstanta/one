@@ -69,5 +69,5 @@ class RandomSeeder:
 
 
 if __name__ == "__main__":
-    RandomSeeder().seed_products(1)
-#       RandomSeeder.seed_categories()
+#    RandomSeeder().seed_products(1)
+       RandomSeeder.seed_categories()

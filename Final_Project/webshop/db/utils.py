@@ -8,12 +8,11 @@ def init_texts():
 
 
 def init_test_user():
-    status = Status.objects.create(user_status=1, user_chat_id='11111test11111')
+    status = Status.objects.create(user_status=3, user_chat_id='11111test11111')
 
     Users.objects.create(
         status=status,
         fname="FirstBuyerName",
-        sname="SurNameBuyer",
         phonenumber="testphonenumber",
         email="testemail@email.com",
         address="Some address here 9a",
@@ -26,7 +25,7 @@ def init_admin():
 
 
 if __name__ == "__main__":
-#    init_texts()
-#    init_test_user()
-    init_admin()
+    init_texts()
+    init_test_user()
+#    init_admin()
 

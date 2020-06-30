@@ -36,7 +36,7 @@ class RandomSeeder:
             self.cat_desc_list = [cat_desc.rstrip() for cat_desc in cat_desc_file if cat_desc.strip() != ""]
 
     @staticmethod
-    def seed_categories(self):
+    def seed_categories():
         category_titles = ['tech', 'tech for home', 'items']
         category_description = ['here gonna be tech', '...', '...']
 

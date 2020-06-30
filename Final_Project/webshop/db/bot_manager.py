@@ -59,7 +59,8 @@ class DBManager:
             else:
                 return False
 
-    def check_phone_number(self, chat_id: [int, str]):
+    @staticmethod
+    def check_phone_number(chat_id: [int, str]):
         status = Status.objects.get(user_chat_id=str(chat_id))
         temp_user = TempData.objects.get(status=status.id)
         try:

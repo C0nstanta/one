@@ -15,7 +15,7 @@ class RandomSeeder:
     title_desc_list = []
     category_list = []  # Категории, которые мы можем сидить
 
-    category_db_list = ['5eefb7fbfe2eea772a570105', '5eefb7fbfe2eea772a570106', '5eefb7fbfe2eea772a570107']
+    category_db_list = ['tech', 'tech for home', 'items']
     # ["5ef08eb6ca2aadc0585df8d2", "5ef0876aca2aadc0585df8d1"]  # Категории, которые уже есть
     # в базе, заносим руками, так как есть нюансы.....
 
@@ -57,7 +57,7 @@ class RandomSeeder:
             price = float(random.randint(500, 3000))
             discount = random.randint(0, 80)
             image_name = random.choice(self.images_list)
-            category = Category.objects(id=random.choice(self.category_db_list))[0]
+            category = Category.objects(title=random.choice(self.category_db_list))[0]
             product = Products(title=title, description=description, price=price, discount=discount, category=category,
                                attributes=ProductAttributes(weight=weight, width=width, depth=depth, height=height))
 
@@ -69,5 +69,5 @@ class RandomSeeder:
 
 
 if __name__ == "__main__":
-#    RandomSeeder().seed_products(1)
-       RandomSeeder.seed_categories()
+    RandomSeeder().seed_products(15)
+#       RandomSeeder.seed_categories()

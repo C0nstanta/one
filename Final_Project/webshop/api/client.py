@@ -49,7 +49,7 @@ def page_not_found(e):
     return render_template("404.html")
 
 
-@app.route('/admin/', methods=["GET", "POST"])
+@app.route('/tg/admin/', methods=["GET", "POST"])
 def admin_authorization():
     cookies = request.cookies
     print(cookies)
@@ -61,7 +61,7 @@ def admin_authorization():
 
         if admin.check_log_pass_registration():
             print("yes. we are an admin!")
-            resp = make_response(redirect('/admin/'))
+            resp = make_response(redirect('/tg/admin/'))
             resp.set_cookie('secret_key', admin.secret_key)
             return resp
         else:

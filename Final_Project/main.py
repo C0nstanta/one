@@ -24,6 +24,6 @@ if __name__ == "__main__":
     p1.join()
     p2.join()
 
-    main_server()
-    main_client()
+    # main_server()
+    # main_client()
 #    app.run(debug=True)

@@ -55,7 +55,7 @@ class KeyBoardShop:
     prev_kb = None
 
     def start_kb(self):
-        kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2, one_time_keyboard=True)  # , one_time_keyboard=True
+        kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)  # , one_time_keyboard=True
         kb.add(*[KeyboardButton(text=text) for text in START_KB.values()])
         return kb
 

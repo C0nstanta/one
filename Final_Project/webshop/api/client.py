@@ -63,7 +63,7 @@ def admin_authorization():
             print("yes. we are an admin!")
             resp = make_response(redirect('/tg/admin/'))
             resp.set_cookie('secret_key', admin.secret_key)
-            return resp
+            return render_template('admin.html', error="Yes. You are admin.")
         else:
             return render_template('admin.html', error="Wrong data. Try again!")
     else:

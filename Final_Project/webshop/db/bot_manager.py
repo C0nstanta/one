@@ -75,7 +75,7 @@ class DBManager:
             if str(chat_id) == str(status.user_chat_id):
                 stat_id = status.id
                 temp_user = TempData.objects.get(status=stat_id)
-                try:
+                if status.user_status == 3:
                     user = Users.objects.get(status=stat_id)
                     order_summ = self.total_cart(chat_id)
                     total_summ = user.total_summ + order_summ
@@ -83,13 +83,12 @@ class DBManager:
                                 email=temp_user.temp_email, address=temp_user.temp_address, total_summ=total_summ)
                     status.update(user_status=3)
                     self.del_cart(chat_id)
-                except ValidationError as e:
+                if status.user_status <= 2:
                     Users.objects.create(status=stat_id, fname=temp_user.temp_fname,
                                          phonenumber=temp_user.temp_phonenumber, email=temp_user.temp_email,
                                          address=temp_user.temp_address, total_summ=self.total_cart(chat_id))
                     status.update(user_status=3)
                     self.del_cart(chat_id)
-                    print(e)
 
     @staticmethod
     def get_user_data(chat_id: [int, str]):
@@ -135,7 +134,6 @@ class DBManager:
             return f"{product.title} нет в корзине"
 
         else:
-            cart = MyCart.objects(user=temp_user.id, product=product.id)[0]
             MyCart.objects(user=temp_user.id, product=product.id).delete()
             return f"{product.title} удален из корзины"
 
@@ -167,4 +165,4 @@ class DBManager:
             return temp_user.id
         except ValidationError as e:
             print(e)
-            return False
+        return False

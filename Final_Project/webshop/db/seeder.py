@@ -1,4 +1,13 @@
-from models import Products, Category, ProductAttributes
+from models import (
+    Products,
+    Category,
+    ProductAttributes,
+    Text,
+    Status,
+    Users,
+    Admin
+)
+
 import os
 from os import listdir
 from os.path import isfile, join
@@ -15,8 +24,8 @@ class RandomSeeder:
     title_desc_list = []
     category_list = []  # Категории, которые мы можем сидить
 
-    category_db_list = ['tech', 'tech for home', 'items']
-    # ["5ef08eb6ca2aadc0585df8d2", "5ef0876aca2aadc0585df8d1"]  # Категории, которые уже есть
+    category_db_list = ['tech', 'tech for home', 'items', 'IPhones', 'LG', 'Samsung', 'Laptop',
+                        'Scanners', 'TV', 'Cameras']
     # в базе, заносим руками, так как есть нюансы.....
 
     cat_desc_list = []
@@ -43,6 +52,27 @@ class RandomSeeder:
         for title, description in zip(category_titles, category_description):
             Category.objects.create(title=title, description=description)
 
+        category_parent = ["Phones", "Computers", "Consumer Electronics"]
+        parent_description = ["phones category", "computers category", "home electronic"]
+        for title, description in zip(category_parent, parent_description):
+            Category.objects.create(title=title, description=description)
+
+        parent = Category.objects.get(title="Phones")
+        phone_child = Category.objects.create(title="IPhones", description="6+ and more", parent=parent)
+        phone_child1 = Category.objects.create(title="LG", description="4+ and more", parent=parent)
+        phone_child2 = Category.objects.create(title="Samsung", description="4+ samsung", parent=parent)
+        Category.objects.get(title="Phones").update(subcategories=[phone_child, phone_child1, phone_child2])
+
+        parent = Category.objects.get(title="Computers")
+        comp_child1 = Category.objects.create(title="Laptop", description="all lattops here", parent=parent)
+        comp_child2 = Category.objects.create(title="Scanners", description="all scanners here", parent=parent)
+        Category.objects.get(title="Computers").update(subcategories=[comp_child1, comp_child2])
+
+        parent = Category.objects.get(title="Consumer Electronics")
+        electro_chid1 = Category.objects.create(title="TV", description="all tv here", parent=parent)
+        electro_chid2 = Category.objects.create(title="Cameras", description="all video here", parent=parent)
+        Category.objects.get(title="Consumer Electronics").update(subcategories=[electro_chid1, electro_chid2])
+
     def seed_products(self, quantity):
         self.product_features_list()
         i = 0
@@ -67,8 +97,36 @@ class RandomSeeder:
 
             i += 1
 
+    @staticmethod
+    def init_texts():
+        Text.objects.create(title=Text.TITLES['greetings'], body='Рады приветствовать вас в нашем магазине')
+        Text.objects.create(title=Text.TITLES['cart'], body='Вы перешли в корзину')
+
+    @staticmethod
+    def init_test_user():
+        status = Status.objects.create(user_status=3, user_chat_id='11111test11111')
+
+        Users.objects.create(
+            status=status,
+            fname="FirstBuyerName",
+            phonenumber="testphonenumber",
+            email="testemail@email.com",
+            address="Some address here 9a",
+            comments="This is a test user bot",
+            total_summ=445.33
+        )
+
+    @staticmethod
+    def init_admin():
+        Admin.objects.create(username="admin", password="123")
+
+
+
 
 if __name__ == "__main__":
+    RandomSeeder.init_texts()
+    RandomSeeder.init_test_user()
+    RandomSeeder.init_admin()
     RandomSeeder.seed_categories()
-    RandomSeeder().seed_products(15)
+    RandomSeeder().seed_products(30)
 

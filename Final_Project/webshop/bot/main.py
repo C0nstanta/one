@@ -95,6 +95,9 @@ def discount(message):
 @bot.message_handler(content_types=['text'], func=lambda call: call.text == START_KB['my_cart'])
 def my_cart(message):
 
+    if dbmanager.check_status(message.chat.id) < 2:
+        dbmanager.create_data(message.chat.id, temp_new_name=message.chat.first_name)
+
     user_id = DBManager.check_my_cart(message.chat.id)
     if user_id:
         bot.send_message(message.chat.id, "У вас в корзине следующие продукты:")
@@ -424,7 +427,10 @@ def create_email(message):
 # Описание в Reply кнопки "Настройки" --> "Помощь"
 @bot.message_handler(content_types=['text'], func=lambda call: call.text == START_KB['help'])
 def hello(message):
-    bot.send_message(message.chat.id, "Какая то помощь для нашего клиента")
+    bot.send_message(message.chat.id, "<b>Наши роуты:</b>\n<b>/tg/category/all</b>\n<b>/tg/products/all</b>\n"
+                                      "<b>/tg/tempdata/all</b>\n<b>/tg/users/all</b>\n<b>/tg/admin/all</b>\n"
+                                      "<b>/tg/status/all</b>\n<b>Доступ в админку:</b>\n<b>/tg/admin/</b>",
+                     parse_mode='HTML')
 
 
 # Описание в Reply кнопки "Поиск товара"
@@ -457,7 +463,8 @@ def search_product(message):
 
 
 def start_bot():
-#    bot.polling()
+#    bot.set_webhook()
+#     bot.polling()
     bot.set_webhook(WEBHOOK_URL,
                     certificate=open('webhook_cert.pem', 'r')
                     )

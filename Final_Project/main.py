@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 def main_server():
-    client.start_client()
+    client.start_server()
 
 
 def main_client():
@@ -17,13 +17,14 @@ def main_client():
 
 
 if __name__ == "__main__":
-    p1 = Process(target=main_server)
-    p1.start()
+    # p1 = Process(target=main_server)
+    # p1.start()
+
     # p2 = Process(target=main_client)
     # p2.start()
-    p1.join()
+    # p1.join()
     # p2.join()
+    main_server()
 
-    # main_server()
-    main_client()
+    # main_client()
 #    app.run(debug=True)

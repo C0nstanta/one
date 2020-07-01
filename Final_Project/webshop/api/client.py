@@ -70,5 +70,5 @@ def admin_authorization():
         return render_template('admin.html')
 
 
-def start_client():
+def start_server():
     app.run(debug=True)

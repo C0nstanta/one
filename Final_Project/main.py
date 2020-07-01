@@ -1,5 +1,10 @@
 from webshop.api import client
 
+from flask import Flask
+
+
+app = Flask(__name__)
+
 
 def main():
     client.start_client()

@@ -463,9 +463,9 @@ def search_product(message):
 
 
 def start_bot():
-#    bot.set_webhook()
-#     bot.polling()
-    bot.set_webhook(WEBHOOK_URL,
-                    certificate=open('webhook_cert.pem', 'r')
-                    )
+    bot.set_webhook()
+    bot.polling()
+#     bot.set_webhook(WEBHOOK_URL,
+#                     certificate=open('webhook_cert.pem', 'r')
+#                     )
 

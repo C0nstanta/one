@@ -118,7 +118,9 @@ class DBManager:
 
         if not MyCart.objects(user=temp_user.id, product=product.id):
             return 0, product.title
-
+        mycart = MyCart.objects(user=temp_user.id, product=product.id)[0]
+        if mycart.quantity <= 0:
+            return 0, product.title
         else:
             cart = MyCart.objects(user=temp_user.id, product=product.id)[0]
             MyCart.objects(user=temp_user.id, product=product.id).update(quantity=(cart.quantity - 1))

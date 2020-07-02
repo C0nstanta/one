@@ -471,7 +471,7 @@ def start_bot():
     time.sleep(1)
     # bot.set_webhook()
     # bot.polling()
-    bot.set_webhook(WEBHOOK_URL,
+    bot.set_webhook(url=WEBHOOK_URL,
                     certificate=open('webhook_cert.pem', 'r')
                     )
 

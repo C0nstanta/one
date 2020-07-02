@@ -62,7 +62,7 @@ def admin_authorization():
         admin = Authorization(username, password)
 
         if admin.check_log_pass_registration():
-            print("yes. we are an admin!")
+            print("yes. you are  admin!")
             resp = make_response(redirect('/tg/admin/'))
             resp.set_cookie('secret_key', admin.secret_key)
             return render_template('admin.html', error="Yes. You are admin.")

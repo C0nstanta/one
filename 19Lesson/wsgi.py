@@ -18,5 +18,5 @@ def webhook():
 
 #
 # if __name__ == '__main__':
-    start_bot()
-    app.run(port=5000, debug=True)
+start_bot()
+    # app.run(port=5000, debug=True)

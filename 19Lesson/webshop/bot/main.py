@@ -36,7 +36,7 @@ dbmanager = DBManager()
 app = Flask(__name__)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/tg', methods=['POST'])
 def process_webhook():
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')

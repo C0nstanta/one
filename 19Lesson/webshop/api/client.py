@@ -19,21 +19,10 @@ from .my_resources import (
     )
 from webshop.bot.main import bot
 from webshop.bot import config
+from wsgi import app
 from .authorization import Authorization
 
 
-app = Flask(__name__)
-
-
-@app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
-def webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        abort(403)
 
 
 api = Api(app)

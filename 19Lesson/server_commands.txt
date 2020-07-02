@@ -1,0 +1,24 @@
+sudo apt update sudo apt install python3-pip 
+From IT Education Academy to Everyone: (19:37)
+ pip3 install --user virtualenv sudo apt-get install python3-venv python3 -m venv venv source venv/bin/activate pip install -r req.txt 
+From IT Education Academy to Everyone: (19:44)
+ sudo apt install -y mongodb sudo apt install nginx sudo service nginx start netstat -ntulp 
+
+sudo cp webhook_key.pem /etc/ssl/private 
+sudo cp webhook_cert.pem /etc/ssl/certs
+
+openssl genrsa -out webhook_key.pem 2048
+
+openssl req -new -x509 -days 3650 -key webhook_key.pem -out webhook_cert.pem
+
+
+cd /etc/nginx/sites-available/
+
+
+listen 443 ssl http2; 
+ssl_protocols TLSv1.2 TLSv1.1 TLSv1; 
+ssl_certificate /etc/ssl/certs/webhook_cert.pem; 
+ssl_certificate_key /etc/ssl/private/webhook_key.pem;
+
+pip install gunicorn
+ gunicorn --bind 127.0.0.1:5000 --daemon --reload  main:app

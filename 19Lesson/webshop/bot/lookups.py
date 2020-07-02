@@ -1,0 +1,7 @@
+category_lookup = 'category'
+separator = '_'
+add_product = 'productadd'
+min_product = 'productmin'
+del_product = 'productdel'
+del_cart = 'delcart'
+go_back = 'goback'

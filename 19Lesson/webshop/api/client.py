@@ -33,7 +33,7 @@ api.add_resource(AdminResource, '/tg/admin/all', '/tg/admin/all/<string:id_key>'
 api.add_resource(StatusResource, '/tg/status/all', '/tg/status/all/<string:id_key>')
 
 
-@app.route(config.WEBHOOK_URL, methods=['GET', 'POST'])
+@app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
 def webhook():
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')

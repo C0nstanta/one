@@ -475,3 +475,6 @@ def start_bot():
                     certificate=open('webhook_cert.pem', 'r')
                     )
 
+
+if __name__ == "__main__":
+    start_bot()

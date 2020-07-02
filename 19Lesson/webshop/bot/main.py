@@ -33,19 +33,6 @@ bot = TeleBot(TOKEN)
 kb_shop = KeyBoardShop()
 dbmanager = DBManager()
 
-app = Flask(__name__)
-
-
-@app.route('/tg', methods=['POST'])
-def process_webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        abort(status=403)
-
 
 # Приветствие и проверка зашедшего юзера
 @bot.message_handler(commands=['start'])

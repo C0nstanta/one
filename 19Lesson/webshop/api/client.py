@@ -69,10 +69,3 @@ def admin_authorization():
     else:
         return render_template('admin.html')
 
-
-def start_server():
-    app.run(debug=True)
-
-#
-# if __name__ == "__main__":
-#     start_server()

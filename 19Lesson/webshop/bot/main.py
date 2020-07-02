@@ -468,7 +468,7 @@ def search_product(message):
 def start_bot():
     import time
     bot.remove_webhook()
-    time.sleep(2)
+    time.sleep(1)
     # bot.set_webhook()
     # bot.polling()
     bot.set_webhook(WEBHOOK_URL,

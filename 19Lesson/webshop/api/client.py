@@ -23,14 +23,6 @@ from .authorization import Authorization
 
 
 app = Flask(__name__)
-api = Api(app)
-
-api.add_resource(CategoryResource, '/tg/category/all', '/tg/category/all/<string:id_key>')
-api.add_resource(ProductResource, '/tg/products/all', '/tg/products/all/<string:id_key>')
-api.add_resource(TempDataResource, '/tg/tempdata/all', '/tg/tempdata/all/<string:id_key>')
-api.add_resource(UsersResource, '/tg/users/all', '/tg/users/all/<string:id_key>')
-api.add_resource(AdminResource, '/tg/admin/all', '/tg/admin/all/<string:id_key>')
-api.add_resource(StatusResource, '/tg/status/all', '/tg/status/all/<string:id_key>')
 
 
 @app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
@@ -42,6 +34,16 @@ def webhook():
         return ''
     else:
         abort(403)
+
+
+api = Api(app)
+
+api.add_resource(CategoryResource, '/tg/category/all', '/tg/category/all/<string:id_key>')
+api.add_resource(ProductResource, '/tg/products/all', '/tg/products/all/<string:id_key>')
+api.add_resource(TempDataResource, '/tg/tempdata/all', '/tg/tempdata/all/<string:id_key>')
+api.add_resource(UsersResource, '/tg/users/all', '/tg/users/all/<string:id_key>')
+api.add_resource(AdminResource, '/tg/admin/all', '/tg/admin/all/<string:id_key>')
+api.add_resource(StatusResource, '/tg/status/all', '/tg/status/all/<string:id_key>')
 
 
 @app.errorhandler(404)

@@ -466,14 +466,14 @@ def search_product(message):
 
 
 def start_bot():
-    import time
-    bot.remove_webhook()
-    time.sleep(1)
+    # import time
+    # bot.remove_webhook()
+    # time.sleep(1)
     # bot.set_webhook()
-    # bot.polling()
-    bot.set_webhook(url=WEBHOOK_URL,
-                    certificate=open('webhook_cert.pem', 'r')
-                    )
+    bot.polling()
+    # bot.set_webhook(url=WEBHOOK_URL,
+    #                 certificate=open('webhook_cert.pem', 'r')
+    #                 )
 
 
 if __name__ == "__main__":

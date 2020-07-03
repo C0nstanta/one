@@ -1,11 +1,9 @@
-from telebot import TeleBot
-from flask import Flask, abort, request
-from webshop.bot import config
+from wsgi import bot
+
 
 from telebot.types import (
     InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Update
+    InlineKeyboardMarkup
 )
 from .config import TOKEN, WEBHOOK_URL
 from ..db.models import Text
@@ -30,23 +28,11 @@ from .lookups import (
 import re
 import time
 
-bot = TeleBot(TOKEN)
+
 kb_shop = KeyBoardShop()
 dbmanager = DBManager()
 
 
-app = Flask(__name__)
-
-
-@app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
-def webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        abort(403)
 
 
 # Приветствие и проверка зашедшего юзера
@@ -478,20 +464,3 @@ def search_product(message):
 
         time.sleep(1)
     return
-
-
-def start_bot():
-    import time
-    bot.remove_webhook()
-    time.sleep(1)
-    # bot.set_webhook()
-    # res = bot.get_webhook_info()
-    # print(res)
-    # bot.polling()
-    bot.set_webhook(WEBHOOK_URL,
-                    certificate=open('webhook_cert.pem', 'r')
-                    )
-
-
-if __name__ == "__main__":
-    start_bot()

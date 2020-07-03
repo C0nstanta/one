@@ -1,7 +1,6 @@
 from telebot import TeleBot
 from flask import Flask, request, abort
 
-import telepot
 from telebot.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,

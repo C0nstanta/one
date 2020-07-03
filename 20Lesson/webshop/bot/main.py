@@ -1,6 +1,5 @@
 from telebot import TeleBot
 from flask import Flask, abort, request
-from webshop.bot.main import bot
 from webshop.bot import config
 
 from telebot.types import (
@@ -484,7 +483,7 @@ def search_product(message):
 def start_bot():
     import time
     bot.remove_webhook()
-    time.sleep(2)
+    time.sleep(1)
     # bot.set_webhook()
     # res = bot.get_webhook_info()
     # print(res)

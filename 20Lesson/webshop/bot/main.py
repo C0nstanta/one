@@ -1,8 +1,3 @@
-from flask import Flask, abort, request
-from webshop.bot import config
-
-from telebot import TeleBot
-from telebot.types import Update
 from telebot.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup
@@ -27,27 +22,14 @@ from .lookups import (
     min_product,
     go_back
 )
+from telebot import TeleBot
 import re
 import time
 
 
-app = Flask(__name__)
-bot = TeleBot(config.TOKEN)
-
+bot = TeleBot(TOKEN)
 kb_shop = KeyBoardShop()
 dbmanager = DBManager()
-
-
-@app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
-def webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        abort(403)
-
 
 
 # Приветствие и проверка зашедшего юзера

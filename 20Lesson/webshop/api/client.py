@@ -17,12 +17,10 @@ from .my_resources import (
     AdminResource,
     StatusResource
     )
-from webshop.bot.main import bot
-from webshop.bot import config
+
 from .authorization import Authorization
+from ..bot.main import app
 
-
-app = Flask(__name__)
 api = Api(app)
 
 api.add_resource(CategoryResource, '/tg/category/all', '/tg/category/all/<string:id_key>')
@@ -31,17 +29,6 @@ api.add_resource(TempDataResource, '/tg/tempdata/all', '/tg/tempdata/all/<string
 api.add_resource(UsersResource, '/tg/users/all', '/tg/users/all/<string:id_key>')
 api.add_resource(AdminResource, '/tg/admin/all', '/tg/admin/all/<string:id_key>')
 api.add_resource(StatusResource, '/tg/status/all', '/tg/status/all/<string:id_key>')
-
-
-@app.route(config.WEBHOOK_PATH, methods=['GET', 'POST'])
-def webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        abort(403)
 
 
 @app.errorhandler(404)

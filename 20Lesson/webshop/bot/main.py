@@ -480,6 +480,7 @@ def search_product(message):
         time.sleep(1)
     return
 
+
 def start_bot():
     import time
     bot.remove_webhook()
